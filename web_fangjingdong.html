@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul, ol {
+            list-style: none;
+        }
+
+        div {
+            width: 600px;
+            height: 400px;
+            margin: 100px auto;
+            position: relative;
+        }
+
+        ul > li {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        ol {
+            position: absolute;
+            bottom: 0;
+            left: 220px;
+        }
+
+        ol > li {
+            float: left;
+            width: 20px;
+            height: 20px;
+            background-color: #97b1d0;
+            margin-left: 20px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 20px;
+        }
+        .active{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <ul></ul>
+    <ol></ol>
+</div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/1.12.3/jquery.min.js"></script>
+<script>
+    $(function () {
+        var data = ['images/例图1.jpg', 'images/例图2.jpg', 'images/例图3.jpg', 'images/例图4.jpg'];
+
+        var str = '';
+        var str_ol = '';
+        for (var i = 0; i < data.length; i++) {
+            str += '<li><img src="' + data[i] + '"></li>';
+            if(i==0){
+                str_ol += '<li class="active">' + (i+1) + '</li>'
+            }else {
+                str_ol += '<li>' + (i + 1) + '</li>'
+            }
+
+        }
+        //        分别将 图片和小圆圈 放进去
+        $('ul').html(str);
+        $('ol').html(str_ol);
+
+//      轮播图动画
+        $('ul>li').eq(0).siblings().hide();
+//        记录播放到第几张
+        var index = 0;
+//        开启一个定时器  进行动画播放
+        setInterval(function () {
+            index++;
+            index = index > data.length - 1 ? 0 : index;
+            $('ul>li').eq(index).fadeIn().siblings().fadeOut();
+            $('ol>li').eq(index).addClass('active').siblings().removeClass('active');
+        },1000)
+
+    })
+</script>
+</html>
